@@ -1,0 +1,31 @@
+[
+  {
+    "id": "527a29dc-15d9-4b68-b8fc-c5ed8a16db2c",
+    "title": "Welcome to My New Blog",
+    "slug": "welcome-to-my-new-blog",
+    "category": "Tech",
+    "content": "Ini adalah postingan pertama di blog portofolio saya.\n\n## Kenapa Saya Membuat Blog?\nSaya ingin membagikan pemikiran saya tentang **Web Development**, **Artificial Intelligence (AI)**, dan bagaimana teknologi dapat membantu **UMKM**.\n\n### Rencana Kedepan:\n- Menulis tutorial membuat landing page yang SEO-friendly.\n- Review tools AI yang bermanfaat.\n- Kisah-kisah sukses digitalisasi UMKM.\n\nStay tuned!",
+    "createdAt": "2026-06-15T05:00:00.000Z",
+    "updatedAt": "2026-06-15T05:00:00.000Z"
+  },
+  {
+    "title": "AI Akan menggantikan manusia?",
+    "slug": "ai-akan-menggantikan-manusia",
+    "category": "Technology",
+    "content": "Haloo\n",
+    "thumbnail": "https://unsplash.com/photos/ai-artificial-intelligence-concept3d-renderingconceptual-image-aTWKwJllPOA",
+    "id": "0e013e81-13db-489d-98e8-89ea5fcf43b3",
+    "createdAt": "2026-06-15T05:48:01.636Z",
+    "updatedAt": "2026-06-15T05:48:01.636Z"
+  },
+  {
+    "title": "Prinsip hidup",
+    "slug": "prinsip-hidup",
+    "category": "life",
+    "content": "haloooo....",
+    "thumbnail": "https://images.unsplash.com/profile-1446404465118-3a53b909cc82?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=64&w=64&s=3ef46b07bb19f68322d027cb8f9ac99f",
+    "id": "c50e220d-ad14-4af7-9b93-daad7bdde251",
+    "createdAt": "2026-06-15T06:15:38.992Z",
+    "updatedAt": "2026-06-15T06:15:38.993Z"
+  }
+]

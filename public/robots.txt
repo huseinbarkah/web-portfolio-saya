@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://huseinbarkah.dev/sitemap.xml
