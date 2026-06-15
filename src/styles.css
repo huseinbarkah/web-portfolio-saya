@@ -69,12 +69,15 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 html,
 body,
 #app {
   min-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -83,7 +86,6 @@ body {
   color: var(--color-foreground);
   font-family: var(--font-body);
   line-height: 1.6;
-  overflow-x: hidden;
 }
 
 ::selection {
