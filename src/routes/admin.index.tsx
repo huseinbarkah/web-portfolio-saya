@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { getBlogPosts, deleteBlogPost } from '../server/blog'
+import { logoutAdmin } from '../server/auth'
 import { useServerFn } from '@tanstack/react-start'
-import { Plus, Trash2 } from 'lucide-react'
+import { Plus, Trash2, Settings, LogOut, Pencil } from 'lucide-react'
 
 export const Route = createFileRoute('/admin/')({
   component: AdminDashboard,
@@ -15,6 +16,7 @@ function AdminDashboard() {
   const { posts } = Route.useLoaderData()
   const router = useRouter()
   const deleteFn = useServerFn(deleteBlogPost)
+  const logout = useServerFn(logoutAdmin)
 
   async function handleDelete(id: string) {
     if (confirm('Are you sure you want to delete this post?')) {
@@ -23,16 +25,35 @@ function AdminDashboard() {
     }
   }
 
+  async function handleLogout() {
+    await logout()
+    router.invalidate()
+  }
+
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <h1 className="text-3xl font-display text-foreground">Blog Admin</h1>
-        <Link 
-          to="/admin/blog/new" 
-          className="bg-accent text-white px-4 py-2 rounded-pill font-medium text-sm flex items-center gap-2 hover:opacity-90"
-        >
-          <Plus size={16} /> New Post
-        </Link>
+        <div className="flex flex-wrap items-center gap-3">
+          <Link 
+            to="/admin/settings" 
+            className="glass border border-glass-border text-foreground-muted hover:text-foreground px-4 py-2 rounded-pill font-medium text-sm flex items-center gap-2 hover:border-accent/50 transition-all"
+          >
+            <Settings size={16} /> Settings
+          </Link>
+          <button 
+            onClick={handleLogout}
+            className="glass border border-glass-border text-foreground-muted hover:text-error px-4 py-2 rounded-pill font-medium text-sm flex items-center gap-2 hover:border-error/50 transition-all cursor-pointer"
+          >
+            <LogOut size={16} /> Logout
+          </button>
+          <Link 
+            to="/admin/blog/new" 
+            className="bg-accent text-white px-4 py-2 rounded-pill font-medium text-sm flex items-center gap-2 hover:opacity-90 transition-opacity"
+          >
+            <Plus size={16} /> New Post
+          </Link>
+        </div>
       </div>
 
       <div className="glass rounded-card overflow-hidden">
@@ -61,6 +82,14 @@ function AdminDashboard() {
                     {new Date(post.createdAt).toLocaleDateString()}
                   </td>
                   <td className="p-4 text-right flex justify-end gap-2">
+                    <Link
+                      to="/admin/blog/edit/$slug"
+                      params={{ slug: post.slug }}
+                      className="p-2 text-foreground-muted hover:text-accent transition-colors rounded-full hover:bg-accent/10"
+                      title="Edit"
+                    >
+                      <Pencil size={16} />
+                    </Link>
                     <button 
                       className="p-2 text-foreground-muted hover:text-error transition-colors rounded-full hover:bg-error/10"
                       onClick={() => handleDelete(post.id)}

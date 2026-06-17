@@ -3,7 +3,7 @@ import { getBlogPostBySlug, getBlogPosts } from '../server/blog'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Calendar, Tag, Clock, Share2, Copy, CheckCheck, ArrowRight, BookOpen } from 'lucide-react'
+import { ArrowLeft, Calendar, Tag, Clock, Share2, Copy, CheckCheck, BookOpen } from 'lucide-react'
 import { useI18n } from '../i18n/context'
 import { useState, useMemo } from 'react'
 import { Badge } from '../components/ui/Badge'
@@ -177,46 +177,18 @@ function BlogPostPage() {
           </motion.div>
         )}
 
-        {/* Content Layout: Sidebar + Article */}
-        <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-10 max-w-5xl">
+        {/* Content Layout: Article + Sidebar */}
+        <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-10 lg:gap-16 w-full">
           
-          {/* Table of Contents Sidebar */}
-          {headings.length > 2 && (
-            <motion.aside
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="hidden lg:block"
-            >
-              <div className="sticky top-32">
-                <p className="text-xs font-medium tracking-wider uppercase text-foreground-subtle mb-4">
-                  {t.blogDetail.tableOfContents}
-                </p>
-                <nav className="flex flex-col gap-1.5 border-l border-glass-border pl-4">
-                  {headings.map((heading) => (
-                    <a
-                      key={heading.id}
-                      href={`#${heading.id}`}
-                      className="text-sm text-foreground-subtle hover:text-accent transition-colors leading-snug"
-                      style={{ paddingLeft: heading.level === 3 ? '12px' : '0' }}
-                    >
-                      {heading.text}
-                    </a>
-                  ))}
-                </nav>
-              </div>
-            </motion.aside>
-          )}
-
           {/* Main Article Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className={headings.length <= 2 ? 'max-w-3xl' : ''}
+            className="w-full"
           >
             {/* Markdown content with custom prose styling */}
-            <div className="blog-prose max-w-3xl">
+            <div className="blog-prose w-full">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
@@ -237,7 +209,7 @@ function BlogPostPage() {
             </div>
 
             {/* Divider */}
-            <div className="max-w-3xl my-12">
+            <div className="w-full my-12">
               <div className="h-px bg-gradient-to-r from-transparent via-glass-border-hover to-transparent" />
             </div>
 
@@ -246,7 +218,7 @@ function BlogPostPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="max-w-3xl"
+              className="w-full"
             >
               {/* Share & Engage CTA */}
               <div className="glass rounded-card p-8 border border-glass-border mb-10">
@@ -276,13 +248,13 @@ function BlogPostPage() {
                 </div>
               </div>
 
-              {/* Related Posts */}
+              {/* Related Posts - Mobile Only */}
               {relatedPosts.length > 0 && (
-                <div>
+                <div className="block lg:hidden">
                   <h3 className="text-lg font-display text-foreground mb-6">
                     {t.blogDetail.readMore}
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {relatedPosts.map((related) => (
                       <Link
                         key={related.id}
@@ -304,10 +276,6 @@ function BlogPostPage() {
                           <h4 className="text-sm font-display text-foreground group-hover:text-accent transition-colors line-clamp-2 flex-1">
                             {related.title}
                           </h4>
-                          <div className="mt-3 flex items-center gap-1 text-xs text-accent font-medium">
-                            {t.blog.readArticle}
-                            <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                          </div>
                         </div>
                       </Link>
                     ))}
@@ -316,7 +284,7 @@ function BlogPostPage() {
               )}
 
               {/* Back to all posts */}
-              <div className="mt-10 text-center">
+              <div className="mt-10 mb-8 text-center lg:text-left">
                 <Link
                   to="/blog"
                   className="inline-flex items-center gap-2 text-sm text-foreground-muted hover:text-accent transition-colors group"
@@ -327,6 +295,75 @@ function BlogPostPage() {
               </div>
             </motion.div>
           </motion.div>
+
+          {/* Right Sidebar (Desktop Only) */}
+          <motion.aside
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="hidden lg:block w-full"
+          >
+            <div className="sticky top-32 flex flex-col gap-10">
+              
+              {/* Table of Contents */}
+              {headings.length > 0 && (
+                <div>
+                  <p className="text-xs font-medium tracking-wider uppercase text-foreground-subtle mb-4">
+                    {t.blogDetail.tableOfContents}
+                  </p>
+                  <nav className="flex flex-col gap-1.5 border-l border-glass-border pl-4">
+                    {headings.map((heading) => (
+                      <a
+                        key={heading.id}
+                        href={`#${heading.id}`}
+                        className="text-sm text-foreground-subtle hover:text-accent transition-colors leading-snug"
+                        style={{ paddingLeft: heading.level === 3 ? '12px' : '0' }}
+                      >
+                        {heading.text}
+                      </a>
+                    ))}
+                  </nav>
+                </div>
+              )}
+
+              {/* Related Posts Sidebar */}
+              {relatedPosts.length > 0 && (
+                <div>
+                  <p className="text-xs font-medium tracking-wider uppercase text-foreground-subtle mb-4">
+                    {t.blogDetail.readMore}
+                  </p>
+                  <div className="flex flex-col gap-4">
+                    {relatedPosts.map((related) => (
+                      <Link
+                        key={related.id}
+                        to="/blog/$slug"
+                        params={{ slug: related.slug }}
+                        className="group block"
+                      >
+                        <div className="glass rounded-card p-4 border border-glass-border hover:border-accent/50 transition-colors flex flex-col gap-2">
+                          {related.thumbnail && (
+                            <div className="w-full h-24 rounded-lg overflow-hidden shrink-0">
+                              <img 
+                                src={related.thumbnail} 
+                                alt={related.title} 
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                              />
+                            </div>
+                          )}
+                          <div>
+                            <Badge className="mb-2 inline-flex scale-[0.85] origin-left">{related.category}</Badge>
+                            <h4 className="text-sm font-display text-foreground group-hover:text-accent transition-colors line-clamp-2">
+                              {related.title}
+                            </h4>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.aside>
         </div>
       </div>
     </article>

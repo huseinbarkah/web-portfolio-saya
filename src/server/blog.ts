@@ -1,4 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
+import { getCookie } from '@tanstack/react-start/server'
 import { z } from 'zod'
 import { supabase } from './supabase'
 
@@ -82,6 +83,12 @@ const createPostSchema = z.object({
 export const createBlogPost = createServerFn({ method: 'POST' })
   .validator((data: z.infer<typeof createPostSchema>) => createPostSchema.parse(data))
   .handler(async ({ data }) => {
+    // Auth Check
+    const sessionToken = getCookie('admin_session_token')
+    if (sessionToken !== 'authenticated') {
+      throw new Error('Unauthorized')
+    }
+
     const { data: insertedData, error } = await supabase
       .from('blogs')
       .insert({
@@ -102,9 +109,55 @@ export const createBlogPost = createServerFn({ method: 'POST' })
     return mapToFrontend(insertedData as BlogPost)
   })
 
+const updatePostSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  slug: z.string(),
+  category: z.string(),
+  content: z.string(),
+  thumbnail: z.string().optional()
+})
+
+export const updateBlogPost = createServerFn({ method: 'POST' })
+  .validator((data: z.infer<typeof updatePostSchema>) => updatePostSchema.parse(data))
+  .handler(async ({ data }) => {
+    // Auth Check
+    const sessionToken = getCookie('admin_session_token')
+    if (sessionToken !== 'authenticated') {
+      throw new Error('Unauthorized')
+    }
+
+    const { data: updatedData, error } = await supabase
+      .from('blogs')
+      .update({
+        title: data.title,
+        slug: data.slug,
+        category: data.category,
+        content: data.content,
+        thumbnail: data.thumbnail,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', data.id)
+      .select()
+      .single()
+
+    if (error) {
+      console.error('Error updating post:', error)
+      throw new Error(error.message)
+    }
+
+    return mapToFrontend(updatedData as BlogPost)
+  })
+
 export const deleteBlogPost = createServerFn({ method: 'POST' })
   .validator((id: string) => id)
   .handler(async ({ data: id }) => {
+    // Auth Check
+    const sessionToken = getCookie('admin_session_token')
+    if (sessionToken !== 'authenticated') {
+      throw new Error('Unauthorized')
+    }
+
     const { error } = await supabase
       .from('blogs')
       .delete()
