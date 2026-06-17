@@ -18,7 +18,10 @@ export const Route = createRootRoute({
       { property: 'og:site_name', content: 'Husein Barkah Pambudi' },
     ],
     links: [
-      { rel: 'icon', type: 'image/png', href: '/favicon.png' },
+      { rel: 'icon', href: '/favicon.ico', sizes: '48x48' },
+      { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/logo192.png' },
+      { rel: 'apple-touch-icon', href: '/logo192.png' },
+      { rel: 'manifest', href: '/manifest.json' },
       { rel: 'stylesheet', href: appCss },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
       { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
