@@ -29,14 +29,22 @@ export const Route = createFileRoute('/blog_/$slug')({
       { title: `${title} — Husein Barkah Pambudi` },
       { name: 'description', content: title },
       { property: 'og:title', content: title },
+      { property: 'og:description', content: title },
       { property: 'og:type', content: 'article' },
     ]
 
     if (post?.thumbnail) {
-      meta.push({ property: 'og:image', content: post.thumbnail })
+      // Pastikan URL gambar adalah absolute (https://...)
+      const isAbsolute = post.thumbnail.startsWith('http://') || post.thumbnail.startsWith('https://')
+      const imageUrl = isAbsolute ? post.thumbnail : `https://www.huseinbarkah.xyz${post.thumbnail}`
+
+      meta.push({ property: 'og:image', content: imageUrl })
+      meta.push({ property: 'og:image:secure_url', content: imageUrl })
+      meta.push({ property: 'og:image:width', content: '1200' })
+      meta.push({ property: 'og:image:height', content: '630' })
       meta.push({ name: 'twitter:card', content: 'summary_large_image' })
       meta.push({ name: 'twitter:title', content: title })
-      meta.push({ name: 'twitter:image', content: post.thumbnail })
+      meta.push({ name: 'twitter:image', content: imageUrl })
     }
 
     return { meta }
