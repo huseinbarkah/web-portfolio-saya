@@ -5,7 +5,7 @@ import { useI18n } from '../i18n/context'
 import { SectionHeading } from '../components/ui/SectionHeading'
 import { Badge } from '../components/ui/Badge'
 import { getBlogPosts } from '../server/blog'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 
 export const Route = createFileRoute('/blog')({
   head: () => ({
@@ -22,10 +22,7 @@ export const Route = createFileRoute('/blog')({
   component: BlogPage,
 })
 
-const categories = [
-  'All', 'Web Dev', 'AI', 'Digital Business', 'Tutorial',
-  'UMKM', 'Productivity', 'Career', 'Tech',
-]
+
 
 function BlogPage() {
   const { t } = useI18n()
@@ -33,6 +30,15 @@ function BlogPage() {
   
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
+
+  const categories = useMemo(() => {
+    const cats = new Set(posts.map(p => p.category))
+    return ['All', ...Array.from(cats)].sort((a, b) => {
+      if (a === 'All') return -1
+      if (b === 'All') return 1
+      return a.localeCompare(b)
+    })
+  }, [posts])
 
   const filteredPosts = posts.filter(post => {
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 

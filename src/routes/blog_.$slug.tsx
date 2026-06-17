@@ -22,15 +22,24 @@ export const Route = createFileRoute('/blog_/$slug')({
     return { post, relatedPosts }
   },
   head: ({ loaderData }) => {
-    const title = loaderData?.post?.title ?? 'Blog Post'
-    return {
-      meta: [
-        { title: `${title} — Husein Barkah Pambudi` },
-        { name: 'description', content: title },
-        { property: 'og:title', content: title },
-        { property: 'og:type', content: 'article' },
-      ],
+    const post = loaderData?.post
+    const title = post?.title ?? 'Blog Post'
+    
+    const meta = [
+      { title: `${title} — Husein Barkah Pambudi` },
+      { name: 'description', content: title },
+      { property: 'og:title', content: title },
+      { property: 'og:type', content: 'article' },
+    ]
+
+    if (post?.thumbnail) {
+      meta.push({ property: 'og:image', content: post.thumbnail })
+      meta.push({ name: 'twitter:card', content: 'summary_large_image' })
+      meta.push({ name: 'twitter:title', content: title })
+      meta.push({ name: 'twitter:image', content: post.thumbnail })
     }
+
+    return { meta }
   },
   errorComponent: () => (
     <div className="min-h-screen pt-32 pb-20 flex flex-col items-center justify-center">
