@@ -91,6 +91,20 @@ export const en = {
     library: 'Library',
   },
 
+  // Blog Detail
+  blogDetail: {
+    backToBlog: 'Back to Blog',
+    share: 'Share',
+    copyLink: 'Copy Link',
+    copied: 'Copied!',
+    tableOfContents: 'Table of Contents',
+    ctaTitle: 'Enjoyed this article?',
+    ctaDescription: 'If you found this useful, share it with your friends or colleagues who might benefit from it too.',
+    shareArticle: 'Share Article',
+    readMore: 'Read More Articles',
+    viewAllPosts: 'View All Articles',
+  },
+
   // Contact
   contact: {
     label: 'GET IN TOUCH',

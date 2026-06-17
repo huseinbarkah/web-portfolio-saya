@@ -93,6 +93,20 @@ export const id: Dictionary = {
     library: 'Perpustakaan',
   },
 
+  // Blog Detail
+  blogDetail: {
+    backToBlog: 'Kembali ke Blog',
+    share: 'Bagikan',
+    copyLink: 'Salin Tautan',
+    copied: 'Tersalin!',
+    tableOfContents: 'Daftar Isi',
+    ctaTitle: 'Suka artikel ini?',
+    ctaDescription: 'Jika artikel ini bermanfaat, bagikan ke teman atau kolega yang mungkin juga butuh informasi ini.',
+    shareArticle: 'Bagikan Artikel',
+    readMore: 'Baca Artikel Lainnya',
+    viewAllPosts: 'Lihat Semua Artikel',
+  },
+
   // Contact
   contact: {
     label: 'HUBUNGI SAYA',

@@ -6,7 +6,7 @@ const socials = [
   { icon: Github, href: 'https://github.com/huseinbarkah', label: 'GitHub' },
   { icon: Linkedin, href: 'https://linkedin.com/in/huseinbarkah', label: 'LinkedIn' },
   { icon: Instagram, href: 'https://instagram.com/huseinbarkah', label: 'Instagram' },
-  { icon: Mail, href: 'mailto:huseinbarkah@example.com', label: 'Email' },
+  { icon: Mail, href: 'mailto:husein12332111@gmail.com', label: 'Email' },
 ]
 
 export function Footer() {

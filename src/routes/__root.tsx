@@ -35,7 +35,7 @@ export const Route = createRootRoute({
           '@type': 'Person',
           name: 'Husein Barkah Pambudi',
           jobTitle: 'Digital Business Student & Tech Enthusiast',
-          url: 'https://huseinbarkah.dev',
+          url: 'https://www.huseinbarkah.xyz',
           sameAs: [
             'https://github.com/huseinbarkah',
             'https://linkedin.com/in/huseinbarkah',
